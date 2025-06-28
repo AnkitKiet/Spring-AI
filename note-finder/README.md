@@ -1,31 +1,37 @@
-# Spring Boot Hello World
+# 🧠 AI Note Finder – Semantic Search POC
 
-A simple Spring Boot application with a REST endpoint that returns "Hello, World!"
+A production-ready proof-of-concept for saving and semantically searching notes using:
 
-## Prerequisites
+- 💻 Spring Boot (REST APIs)
+- 🤖 Ollama (`nomic-embed-text` model for embeddings)
+- 📦 Qdrant (Vector Database for similarity search)
 
-- Java 21
-- Maven
+---
 
-## Running the Application
+## 🎯 Features
 
-1. Build the project:
-```bash
-mvn clean install
-```
+| Endpoint                   | Description                                      |
+|----------------------------|--------------------------------------------------|
+| `POST /note`               | Add a single note                                |
+| `POST /note/bulk`          | Insert bulk notes with embeddings (1000+ capable)|
+| `GET /note/search?q=...`   | Semantic search for similar notes                |
 
-2. Run the application:
-```bash
-mvn spring-boot:run
-```
+---
 
-3. Access the endpoint:
-```
-http://localhost:8080/hello
-```
+## 🏗️ Architecture
 
-## Features
-
-- Spring Boot 3.2.2
-- Java 21
-- REST endpoint at `/hello`
+```plaintext
+User
+ │
+ └──> Spring Boot REST API
+         ├── POST /note         - Add note
+         ├── POST /note/bulk    - Add multiple notes
+         └── GET  /note/search  - Search notes
+              ↓
+     ┌────────────────────┐
+     │ Embedding Provider │ ← Ollama (nomic-embed-text)
+     └────────────────────┘
+              ↓
+     ┌────────────────────┐
+     │  Vector Database   │ ← Qdrant
+     └────────────────────┘
